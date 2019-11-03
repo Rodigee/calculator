@@ -22,12 +22,18 @@ namespace Calculator
 
             foreach(var numberString in numberStrings)
             {
-                float.TryParse(numberString, out float numberInt);
-                if(numberInt < 0)
+                float.TryParse(numberString, out float numberFloat);
+                if(numberFloat < 0)
                 {
-                    negativeNumbersEncountered.Add(numberInt);
+                    negativeNumbersEncountered.Add(numberFloat);
                 }
-                sum += numberInt;
+
+                if(numberFloat > 1000)
+                {
+                    numberFloat = 0;
+                }
+
+                sum += numberFloat;
             }
 
             if(negativeNumbersEncountered.Count > 0)

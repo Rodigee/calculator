@@ -32,13 +32,13 @@ namespace CalculatorTests
         public void CalculateSum_TwoNumbers_AddNumbers()
         {
             // Arrange
-            var formula = "1,5000";
+            var formula = "1,300";
 
             // Act
             var result = calculator.CalculateSum(formula);
 
             // Assert
-            Assert.AreEqual("5001", result);
+            Assert.AreEqual("301", result);
         }
 
         [TestMethod]
@@ -70,12 +70,12 @@ namespace CalculatorTests
         public void CalculateSum_NumbersWithDecimals_AddsNumbers()
         {
             // Arrange
-            var formula = "1.24,5000.1,1,1,2000.1";
+            var formula = "1.24,500.1,1,1,200.1";
 
             // Act
             var result = calculator.CalculateSum(formula);
             // Assert
-            Assert.AreEqual("7003.44", result);
+            Assert.AreEqual("703.44", result);
         }
 
         [TestMethod]
@@ -190,6 +190,32 @@ namespace CalculatorTests
 
             // Assert
             Assert.AreEqual("6", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_NumberIsGreaterThan1000_ReturnZero()
+        {
+            // Arrange
+            var formula = "1001";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("0", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_SomesNumbersAreGreaterThan1000_IgnoreNumbersGreaterThanZero()
+        {
+            // Arrange
+            var formula = "1000.1,6,4,2000";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("10", result);
         }
     }
 }
