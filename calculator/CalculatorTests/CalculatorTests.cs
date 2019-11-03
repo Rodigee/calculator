@@ -42,41 +42,40 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        public void CalculateSum_OneNegativeNumberAndOnePositive_AddNumbers()
+        public void CalculateSum_OneNegativeNumberAndOnePositive_ThrowExceptionListingNegativeNumber()
         {
             // Arrange
-            var formula = "4,-3";
+            var formula = "4,-3.1";
 
             // Act
-            var result = calculator.CalculateSum(formula);
-
             // Assert
-            Assert.AreEqual("1", result);
+            var ex = Assert.ThrowsException<ArgumentException>(() => calculator.CalculateSum(formula));
+            Assert.IsTrue(ex.Message.Contains("-3.1"));
         }
 
         [TestMethod]
-        public void CalculateSum_TwoNegativeNumbers_AddNumbers()
+        public void CalculateSum_TwoNegativeNumbers_ThrowExceptionListingNegativeNumbers()
         {
             // Arrange
             var formula = "-14,-3";
 
             // Act
-            var result = calculator.CalculateSum(formula);
-
             // Assert
-            Assert.AreEqual("-17", result);
+            var ex = Assert.ThrowsException<ArgumentException>(() => calculator.CalculateSum(formula));
+            Assert.IsTrue(ex.Message.Contains("-14"));
+            Assert.IsTrue(ex.Message.Contains("-3"));
         }
 
         [TestMethod]
-        public void CalculateSum_FiveNumbersWithMixedSigns_AddsNumbers()
+        public void CalculateSum_NumbersWithDecimals_AddsNumbers()
         {
             // Arrange
-            var formula = "1,5000,1,1,-2000";
+            var formula = "1.24,5000.1,1,1,2000.1";
 
             // Act
             var result = calculator.CalculateSum(formula);
             // Assert
-            Assert.AreEqual("3003", result);
+            Assert.AreEqual("7003.44", result);
         }
 
         [TestMethod]
@@ -158,26 +157,26 @@ namespace CalculatorTests
         public void CalculateSum_MultipleInvalidAndValidInputs_ReturnOnlyValidInput()
         {
             // Arrange
-            var formula = "ty,5,ty,10,-20,,aerd";
+            var formula = "ty,5,ty,10,,aerd";
 
             // Act
             var result = calculator.CalculateSum(formula);
 
             // Assert
-            Assert.AreEqual("-5", result);
+            Assert.AreEqual("15", result);
         }
 
         [TestMethod]
         public void CalculateSum_NewLineSeparators_ReturnSum()
         {
             // Arrange
-            var formula = "1\n2\n-9\narg";
+            var formula = "1\n2\n9\narg";
 
             // Act
             var result = calculator.CalculateSum(formula);
 
             // Assert
-            Assert.AreEqual("-6", result);
+            Assert.AreEqual("12", result);
         }
 
         [TestMethod]
