@@ -8,7 +8,7 @@ namespace Calculator
 {
     public class Calculator
     {
-        public string CalculateFormula(string formula)
+        public string CalculateSum(string formula)
         {
             if (formula == null)
             {
@@ -19,30 +19,17 @@ namespace Calculator
 
             var numberStrings = formula.Split(separtor);
 
-            if(numberStrings.Length == 0)
+            var sum = 0;
+
+            foreach(var numberString in numberStrings)
             {
-                return "0";
+                int.TryParse(numberString, out int numberInt);
+                sum += numberInt;
             }
-
-            if (numberStrings.Length > 2)
-            {
-                throw (new ArgumentException("There can only be one comma in the formula"));
-            }
-
-            var firstString = numberStrings[0];
-            int.TryParse(firstString, out int firstInt);
-
-            if (numberStrings.Length == 1)
-            {
-                return firstInt.ToString();   
-            }
-
-            var secondString = numberStrings[1];
-            int.TryParse(secondString, out int secondInt);
-
-            var sum = firstInt + secondInt;
 
             return sum.ToString();
         }
+
+
     }
 }

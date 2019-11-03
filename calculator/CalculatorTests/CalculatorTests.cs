@@ -16,129 +16,155 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        public void CalculateFormula_OneNumber_ReturnNumber()
+        public void CalculateSum_OneNumber_ReturnNumber()
         {
             // Arrange
             var formula = "20";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("20", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_TwoNumbers_AddNumbers()
+        public void CalculateSum_TwoNumbers_AddNumbers()
         {
             // Arrange
             var formula = "1,5000";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("5001", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_OneNegativeNumberAndOnePositive_AddNumbers()
+        public void CalculateSum_OneNegativeNumberAndOnePositive_AddNumbers()
         {
             // Arrange
             var formula = "4,-3";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("1", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_TwoNegativeNumbers_AddNumbers()
+        public void CalculateSum_TwoNegativeNumbers_AddNumbers()
         {
             // Arrange
             var formula = "-14,-3";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("-17", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_MoreThanTwoNumbers_ThrowException()
+        public void CalculateSum_FiveNumbersWithMixedSigns_AddsNumbers()
         {
             // Arrange
-            var formula = "1,5000,1";
+            var formula = "1,5000,1,1,-2000";
 
             // Act
+            var result = calculator.CalculateSum(formula);
             // Assert
-            Assert.ThrowsException<ArgumentException>(() => calculator.CalculateFormula(formula));
+            Assert.AreEqual("3003", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_EmptyInput_ReturnZero()
+        public void CalculateSum_SevenNumbers_AddsNumbers()
+        {
+            // Arrange
+            var formula = "1,2,3,4,5,6,7,8,9,10,11,12";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+            // Assert
+            Assert.AreEqual("78", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_EmptyInput_ReturnZero()
         {
             // Arrange
             var formula = "";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("0", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_NullInput_ReturnZero()
+        public void CalculateSum_NullInput_ReturnZero()
         {
             // Arrange
             // Act
-            var result = calculator.CalculateFormula(null);
+            var result = calculator.CalculateSum(null);
 
             // Assert
             Assert.AreEqual("0", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_InvalidInput_ReturnZero()
+        public void CalculateSum_InvalidInput_ReturnZero()
         {
             // Arrange
             var formula = "ty";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("0", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_TwoInvalidInputs_ReturnZero()
+        public void CalculateSum_TwoInvalidInputs_ReturnZero()
         {
             // Arrange
             var formula = "ty,ty";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("0", result);
         }
 
         [TestMethod]
-        public void CalculateFormula_InvalidInputAndValidInput_ReturnOnlyValidInput()
+        public void CalculateSum_InvalidInputAndValidInput_ReturnOnlyValidInput()
         {
             // Arrange
             var formula = "ty,5";
 
             // Act
-            var result = calculator.CalculateFormula(formula);
+            var result = calculator.CalculateSum(formula);
 
             // Assert
             Assert.AreEqual("5", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_MultipleInvalidAndValidInputs_ReturnOnlyValidInput()
+        {
+            // Arrange
+            var formula = "ty,5,ty,10,-20,,aerd";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("-5", result);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace CalculatorApp
 
             Console.WriteLine("Please enter your formula:");
             var formula = Console.ReadLine();
-            var result = Calculator.CalculateFormula(formula);
+            var result = Calculator.CalculateSum(formula);
             Console.WriteLine("Result:");
             Console.WriteLine(result);
             Console.WriteLine("Press any key to exit");
