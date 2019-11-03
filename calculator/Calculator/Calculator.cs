@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calculator
+﻿namespace Calculator
 {
     public class Calculator
     {
@@ -15,9 +9,9 @@ namespace Calculator
                 return "0";
             }
 
-            var separtor = ',';
+            char[] separators = { ',', '\n' };
 
-            var numberStrings = formula.Split(separtor);
+            var numberStrings = formula.Split(separators);
 
             var sum = 0;
 

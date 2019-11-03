@@ -166,5 +166,31 @@ namespace CalculatorTests
             // Assert
             Assert.AreEqual("-5", result);
         }
+
+        [TestMethod]
+        public void CalculateSum_NewLineSeparators_ReturnSum()
+        {
+            // Arrange
+            var formula = "1\n2\n-9\narg";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("-6", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_NewLineAndCommaSeparators_ReturnSum()
+        {
+            // Arrange
+            var formula = "1\n2,3";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("6", result);
+        }
     }
 }

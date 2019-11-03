@@ -18,7 +18,7 @@ namespace CalculatorApp
             var result = Calculator.CalculateSum(formula);
             Console.WriteLine("Result:");
             Console.WriteLine(result);
-            Console.WriteLine("Press any key to exit");
+            Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
     }
