@@ -13,13 +13,15 @@ namespace CalculatorApp
         {
             var Calculator = new Calculator.Calculator();
 
-            Console.WriteLine("Please enter your formula:");
-            var formula = Console.ReadLine();
-            var result = Calculator.CalculateSum(formula);
-            Console.WriteLine("Result:");
-            Console.WriteLine(result);
-            Console.WriteLine("Press enter to exit");
-            Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Please enter your formula:");
+                var formula = Console.ReadLine();
+                var result = Calculator.CalculateSum(formula);
+                Console.WriteLine("Result:");
+                Console.WriteLine(result);
+            } while (true);
+            
         }
     }
 }
