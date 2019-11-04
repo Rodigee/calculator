@@ -13,19 +13,27 @@ namespace Calculator
             }
 
             var delimiters = GetDelimiters(formula);
-            var numberStrings = formula.Split(delimiters.ToArray());
+            var numberStrings = formula.Split(delimiters.ToArray(), System.StringSplitOptions.RemoveEmptyEntries);
 
             var sum = GetSum(numberStrings);
             return sum.ToString();
         }
 
-        private List<char> GetDelimiters(string formula)
+        // I'm making the assumption that we will always support the delimiters of ',' and '\n'
+        // in every formula even if the formula has a custom delimiter
+        private List<string> GetDelimiters(string formula)
         {
-            List<char> delimiters = new List<char> { ',', '\n' };
+            var delimiters = new List<string> { ",", "\n" };
 
             if (formula.StartsWith("//") && formula[3] == '\n')
             {
-                var customDelimiter = formula[2];
+                var customDelimiter = formula[2].ToString();
+                delimiters.Add(customDelimiter);
+            }
+            else if (formula.StartsWith("//["))
+            {
+                var rightSquareBracketIndex = formula.IndexOf(']');
+                var customDelimiter = formula.Substring(3, rightSquareBracketIndex - 3);
                 delimiters.Add(customDelimiter);
             }
 

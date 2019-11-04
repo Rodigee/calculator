@@ -271,7 +271,7 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        public void CalculateSum_FormulaContainsCustomCommaAndNewLineDelimiters_ReturnSum()
+        public void CalculateSum_FormulaContainsSingleCharacterCustomAndCommaAndNewLineDelimiters_ReturnSum()
         {
             // Arrange
             var formula = "//t\n2t100\n1,1";
@@ -281,6 +281,71 @@ namespace CalculatorTests
 
             // Assert
             Assert.AreEqual("104", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultiCharacterCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[***]\n11***22***33";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("66", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultiNumberCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[123]\n111232212333";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("66", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultiCharacterCustomAndCommaAndNewLineDelimiters_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[z1z]\n2z1z100\n1,1";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("104", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsSingleCharacterCustomDelimiterOfLeftSqureBracket_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[\n2[100";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("102", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsBlankMultiCharacterCustomDelimiter_ReturnNumber()
+        {
+            // Arrange
+            var formula = "//[]\n210";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("210", result);
         }
     }
 }
