@@ -12,23 +12,41 @@ namespace Calculator
                 return "0";
             }
 
-            char[] separators = { ',', '\n' };
+            var delimiters = GetDelimiters(formula);
+            var numberStrings = formula.Split(delimiters.ToArray());
 
-            var numberStrings = formula.Split(separators);
+            var sum = GetSum(numberStrings);
+            return sum.ToString();
+        }
 
+        private List<char> GetDelimiters(string formula)
+        {
+            List<char> delimiters = new List<char> { ',', '\n' };
+
+            if (formula.StartsWith("//") && formula[3] == '\n')
+            {
+                var customDelimiter = formula[2];
+                delimiters.Add(customDelimiter);
+            }
+
+            return delimiters;
+        }
+
+        private float GetSum(string[] numberStrings)
+        {
             var sum = 0f;
 
             var negativeNumbersEncountered = new List<float>();
 
-            foreach(var numberString in numberStrings)
+            foreach (var numberString in numberStrings)
             {
                 float.TryParse(numberString, out float numberFloat);
-                if(numberFloat < 0)
+                if (numberFloat < 0)
                 {
                     negativeNumbersEncountered.Add(numberFloat);
                 }
 
-                if(numberFloat > 1000)
+                if (numberFloat > 1000)
                 {
                     numberFloat = 0;
                 }
@@ -36,12 +54,12 @@ namespace Calculator
                 sum += numberFloat;
             }
 
-            if(negativeNumbersEncountered.Count > 0)
+            if (negativeNumbersEncountered.Count > 0)
             {
                 ThrowNegativeNumbersException(negativeNumbersEncountered);
             }
 
-            return sum.ToString();
+            return sum;
         }
 
         private void ThrowNegativeNumbersException(List<float> negativeNumbersEncountered)

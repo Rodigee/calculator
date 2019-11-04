@@ -217,5 +217,70 @@ namespace CalculatorTests
             // Assert
             Assert.AreEqual("10", result);
         }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsOneCharacterCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//#\n2#5";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("7", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsCommaCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//,\n2,ff,100";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("102", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsNewLineCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//\n\n2\nff\n100";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("102", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsNumberCustomDelimiter_ReturnSum()
+        {
+            // Arrange
+            var formula = "//9\n29ff9100";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("102", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsCustomCommaAndNewLineDelimiters_ReturnSum()
+        {
+            // Arrange
+            var formula = "//t\n2t100\n1,1";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("104", result);
+        }
     }
 }
