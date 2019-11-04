@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Calculator
 {
@@ -13,34 +14,59 @@ namespace Calculator
             }
 
             var delimiters = GetDelimiters(formula);
-            var numberStrings = formula.Split(delimiters.ToArray(), System.StringSplitOptions.RemoveEmptyEntries);
+            var numberStrings = formula.Split(delimiters.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
             var sum = GetSum(numberStrings);
             return sum.ToString();
         }
 
-        // I'm making the assumption that we will always support the delimiters of ',' and '\n'
-        // in every formula even if the formula has a custom delimiter
         private List<string> GetDelimiters(string formula)
         {
+            // I'm making the assumption that we will always support the delimiters of ',' and '\n'
+            // in every formula even if the formula has a custom delimiter
             var delimiters = new List<string> { ",", "\n" };
 
             if (formula.StartsWith("//") && formula[3] == '\n')
             {
-                var customDelimiter = formula[2].ToString();
-                delimiters.Add(customDelimiter);
+                AddSingleCharacterCustomDelimiter(delimiters, formula);
             }
             else if (formula.StartsWith("//["))
             {
-                var rightSquareBracketIndex = formula.IndexOf(']');
-                if(rightSquareBracketIndex != -1)
-                {
-                    var customDelimiter = formula.Substring(3, rightSquareBracketIndex - 3);
-                    delimiters.Add(customDelimiter);
-                }
+                AddMultiCharacterCustomDelimiters(delimiters, formula);
             }
 
+            // We're listing the longer delimiters first so they take priority.
+            // This gets around a bug that occurs when delimiters share characters
+            delimiters = delimiters.OrderByDescending(x => x.Length).ToList();
+
             return delimiters;
+        }
+
+        private void AddSingleCharacterCustomDelimiter(List<string> delimiters, string formula)
+        {
+            var customDelimiter = formula[2].ToString();
+            delimiters.Add(customDelimiter);
+        }
+
+        private void AddMultiCharacterCustomDelimiters (List<string> delimiters, string formula)
+        {
+            int leftSquareBracketIndex = 0;
+            do
+            {
+                leftSquareBracketIndex = formula.IndexOf('[', leftSquareBracketIndex);
+                var rightSquareBracketIndex = formula.IndexOf(']', leftSquareBracketIndex);
+                if (rightSquareBracketIndex == -1)
+                {
+                    break;
+                }
+
+                var customDelimiterStartIndex = leftSquareBracketIndex + 1;
+                var customDelimiterLength = rightSquareBracketIndex - customDelimiterStartIndex;
+                var customDelimiter = formula.Substring(customDelimiterStartIndex, customDelimiterLength);
+                delimiters.Add(customDelimiter);
+
+                leftSquareBracketIndex = formula.IndexOf('[', rightSquareBracketIndex);
+            } while (leftSquareBracketIndex != -1);
         }
 
         private float GetSum(string[] numberStrings)

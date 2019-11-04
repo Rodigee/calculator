@@ -360,5 +360,57 @@ namespace CalculatorTests
             // Assert
             Assert.AreEqual("0", result);
         }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultipleDelimiters_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[*][!!][r9r]\n11r9r22*hh*33!!44";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("110", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultipleDelimitersAndCommaAndNewlineDelimiters_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[*][!!][r9r]\n11r9r22*hh*33!!44,1\n1";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("112", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultipleDelimitersAndTrailingRightSquareBracket_ReturnSumAndIgnoreRightSquareBracket()
+        {
+            // Arrange
+            var formula = "//[*][!!][r9r][\n11r9r22*hh*33!!44";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("110", result);
+        }
+
+        [TestMethod]
+        public void CalculateSum_FormulaContainsMultipleDelimitersWithSameCharacters_ReturnSum()
+        {
+            // Arrange
+            var formula = "//[!!][!!!][!!!!][\n11!!22!!!33!!!!44";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("110", result);
+        }
     }
 }
