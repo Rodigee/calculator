@@ -33,8 +33,11 @@ namespace Calculator
             else if (formula.StartsWith("//["))
             {
                 var rightSquareBracketIndex = formula.IndexOf(']');
-                var customDelimiter = formula.Substring(3, rightSquareBracketIndex - 3);
-                delimiters.Add(customDelimiter);
+                if(rightSquareBracketIndex != -1)
+                {
+                    var customDelimiter = formula.Substring(3, rightSquareBracketIndex - 3);
+                    delimiters.Add(customDelimiter);
+                }
             }
 
             return delimiters;

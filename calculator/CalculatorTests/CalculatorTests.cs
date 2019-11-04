@@ -347,5 +347,18 @@ namespace CalculatorTests
             // Assert
             Assert.AreEqual("210", result);
         }
+
+        [TestMethod]
+        public void CalculateSum_FormulaHasFauxMultiCharacterDelimiter_ReturnZero()
+        {
+            // Arrange
+            var formula = "//[123";
+
+            // Act
+            var result = calculator.CalculateSum(formula);
+
+            // Assert
+            Assert.AreEqual("0", result);
+        }
     }
 }
